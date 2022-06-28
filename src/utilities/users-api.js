@@ -1,5 +1,4 @@
 const BASE_URL = '/api/users'
-const LOGIN_URL = '/api/users/login'
 
 export async function signUp(userData){
     const res = await fetch(BASE_URL, {
@@ -16,7 +15,7 @@ export async function signUp(userData){
 }
 
 export async function login(credentials){
-    const res = await fetch(LOGIN_URL, {
+    const res = await fetch(`${BASE_URL}/login`, {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(credentials)
