@@ -11,6 +11,18 @@ async function create(req, res){
     }
 }
 
+async function login(req, res){
+    try{
+        const user = await User.find({email: req.body.email})
+        if (!user) throw new Error()
+        const match = await bcrypt.compare(req.body.password, user.password)
+        if (!match) throw new Error()
+        res.json(createJWT(user))
+    } catch (err) {
+        res.status(400).json('Bad Credentials')
+    }
+}
+
 function createJWT(user){
     return jwt.sign(
         { user },
@@ -19,4 +31,4 @@ function createJWT(user){
     )
 }
 
-module.exports = {create}
+module.exports = {create, login}
